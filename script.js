@@ -16,19 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btnPt) btnPt.classList.remove('active');
         }
         
-        // CORREÇÃO DA TELA BRANCA: Força a renderização imediata da opacidade
+        // Força a renderização imediata da opacidade ao trocar de língua
         setTimeout(checkAnimationVisibility, 30);
     }
     const bodyClass = document.body.className;
     setLanguage(bodyClass.includes('lang-pt') ? 'pt' : 'en');
 
 
-    /* --- ANIMAÇÕES DE SCROLL PADRÃO (SÓ ENTRADA) --- */
+    /* --- ANIMAÇÕES DE SCROLL (ENTRADA E SAÍDA ATIVAS) --- */
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible'); // Aparece e fica fixo
+                entry.target.classList.add('visible');    // Animação de Entrada
+            } else {
+                entry.target.classList.remove('visible'); // Animação de Saída (Volta a ocultar ao sair da tela)
             }
         });
     }, observerOptions);
@@ -36,19 +38,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.fade-in-up');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Sincronizador de visibilidade para garantir o estado correto em resizes ou mudanças de língua
     function checkAnimationVisibility() {
         const elements = document.querySelectorAll('.fade-in-up');
         elements.forEach(el => {
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight && rect.bottom >= 0) {
                 el.classList.add('visible');
+            } else {
+                el.classList.remove('visible');
             }
         });
     }
 
 
     /* --- BOTÕES MAGNÉTICOS (DESATIVADOS EM TELEMÓVEIS / ANTI-BUG) --- */
-    // Só ativa o efeito magnético se o ecrã for maior que 768px (Desktop/Tablets Grandes)
     if (window.innerWidth > 768) {
         const magnetics = document.querySelectorAll('.magnetic');
         magnetics.forEach(btn => {
@@ -107,6 +111,7 @@ window.addEventListener('load', () => {
         });
     }
 
+    // Botão Anterior
     function slidePrev() {
         if (isTransitioning) return;
         isTransitioning = true;
