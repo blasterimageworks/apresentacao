@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setLanguage(bodyClass.includes('lang-pt') ? 'pt' : 'en');
 
 
-    /* --- ANIMAÇÕES DE SCROLL PADRÃO (SÓ ENTRADA / REVERTIDO) --- */
+    /* --- ANIMAÇÕES DE SCROLL PADRÃO (SÓ ENTRADA) --- */
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.fade-in-up');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Forçador de visibilidade para evitar bugs ao trocar de língua
     function checkAnimationVisibility() {
         const elements = document.querySelectorAll('.fade-in-up');
         elements.forEach(el => {
@@ -48,25 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* --- BOTÕES MAGNÉTICOS --- */
-    const magnetics = document.querySelectorAll('.magnetic');
-    magnetics.forEach(btn => {
-        btn.addEventListener('mouseenter', () => {
-            btn.style.transition = 'none'; 
-        });
+    /* --- BOTÕES MAGNÉTICOS (DESATIVADOS EM TELEMÓVEIS / ANTI-BUG) --- */
+    // Só ativa o efeito magnético se o ecrã for maior que 768px (Desktop/Tablets Grandes)
+    if (window.innerWidth > 768) {
+        const magnetics = document.querySelectorAll('.magnetic');
+        magnetics.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transition = 'none'; 
+            });
 
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-        });
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
 
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            btn.style.transform = `translate(0px, 0px)`;
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                btn.style.transform = `translate(0px, 0px)`;
+            });
         });
-    });
+    }
 
 });
 
@@ -95,7 +97,7 @@ window.addEventListener('load', () => {
         track.style.transform = `translateX(-${slideAmount}px)`;
 
         track.addEventListener('transitionend', function onTransitionEnd(e) {
-            if (e.target !== track) return; // Ignora o ruído do mouse hover interno
+            if (e.target !== track) return; 
             
             track.style.transition = 'none';
             track.appendChild(track.firstElementChild);
@@ -114,7 +116,7 @@ window.addEventListener('load', () => {
         track.insertBefore(track.lastElementChild, track.firstElementChild);
         track.style.transform = `translateX(-${slideAmount}px)`;
 
-        track.offsetHeight; // Force reflow
+        track.offsetHeight; 
 
         track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         track.style.transform = 'translateX(0)';
