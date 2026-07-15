@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-PT" id="top">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blaster Image Works | Audiovisual para território e comunicação institucional</title>
     
-    <!-- Favicon Dinâmico (Modo Claro/Escuro na pasta assets) -->
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <!-- Favicon Dinâmico (Modo Claro/Escuro na pasta assets) - CORRIGIDO -->
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
     
     <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- Ligação ao CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- Ligação ao CSS - CORRIGIDO -->
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body class="lang-pt">
 
@@ -37,7 +37,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <video class="hero-video" autoplay loop muted playsinline>
-            <source src="assets/BIW_LINHAS_TOPO_4K_SLOW.mp4" type="video/mp4">
+            <!-- Caminho do vídeo - CORRIGIDO -->
+            <source src="../assets/BIW_LINHAS_TOPO_4K_SLOW.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
@@ -66,8 +67,8 @@
                 <button class="carousel-btn prev-btn magnetic" id="prev-btn">&#8249;</button>
                 <div class="clients-carousel">
                     <div class="carousel-track" id="logo-track">
-                        <!-- SET 1 -->
-                        <img src="../assets/LOGOS MARCAS PARCEIROS/ANDANTE@2x.png" class="carousel-logo" alt="Andante">
+                        <!-- SET 1 (Espaços corrigidos com %20 para evitar erros no browser) -->
+                        <img src="../assets/LOGOS%20MARCAS%20PARCEIROS/ANDANTE@2x.png" class="carousel-logo" alt="Andante">
                         <img src="../assets/LOGOS%20MARCAS%20PARCEIROS/BBC@2x.png" class="carousel-logo" alt="BBC">
                         <img src="../assets/LOGOS%20MARCAS%20PARCEIROS/BENTLEY@2x.png" class="carousel-logo" alt="Bentley">
                         <img src="../assets/LOGOS%20MARCAS%20PARCEIROS/CEPHEID@2x.png" class="carousel-logo" alt="Cepheid">
@@ -266,8 +267,8 @@
 
     <!-- Menu de Navegação Lateral / Voltar ao Topo (Atualizado) -->
     <nav class="side-navigation">
-        <!-- Seta Voltar ao Topo -->
-        <a href="#" id="back-to-top" class="side-nav-item scroll-top-btn" aria-label="Voltar ao topo">
+        <!-- Seta Voltar ao Topo - CORRIGIDO (# para #top) -->
+        <a href="#top" id="back-to-top" class="side-nav-item scroll-top-btn" aria-label="Voltar ao topo">
             <span class="nav-label">
                 <span class="lang-pt">Voltar ao topo</span>
                 <span class="lang-en">Back to top</span>
@@ -306,6 +307,7 @@
         </a>
     </nav>
 
-    <script src="../js/main.js" defer></script>
+    <!-- Script JS - CORRIGIDO para script.js na raiz -->
+    <script src="../script.js" defer></script>
 </body>
 </html>
