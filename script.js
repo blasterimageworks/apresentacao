@@ -165,3 +165,43 @@ window.addEventListener('load', () => {
         });
     }
 });
+
+/* --- CONTROLO DA SETA VOLTAR AO TOPO & SMOOTH SCROLL --- */
+document.addEventListener('DOMContentLoaded', () => {
+    const scrollTopBtn = document.getElementById('back-to-top');
+
+    // Mostra a seta após dar um scroll superior a 250px
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 250) {
+            scrollTopBtn.classList.add('show');
+        } else {
+            scrollTopBtn.classList.remove('show');
+        }
+    });
+
+    // Evento de clique para subir ao topo de forma suave (Smooth)
+    scrollTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Smooth scroll ativo também para os links das secções do menu lateral
+    const sideLinks = document.querySelectorAll('.side-navigation a[href^="#"]');
+    sideLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});

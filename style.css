@@ -249,3 +249,110 @@ footer { padding: 120px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); text
         align-items: center;    /* Garante que ambos ficam bem centrados */
     }
 }
+
+/* --- MENU LATERAL DE NAVEGAÇÃO & RETORNO AO TOPO (ATUALIZADO) --- */
+.side-navigation {
+    position: fixed;
+    right: 3%;
+    bottom: 40px; /* Posicionado no canto inferior direito */
+    z-index: 95;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px; /* Linhas mais juntas (reduzido de 20px para 10px) */
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Base de cada item do Menu */
+.side-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: var(--text-primary);
+    position: relative;
+    cursor: pointer;
+    height: 18px; /* Reduzido de 24px para 18px para aproximar mais as linhas */
+}
+
+/* Rótulo de Texto (Revelado à esquerda da linha) */
+.side-nav-item .nav-label {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-right: 15px; /* Espaço entre o texto e a linha */
+    white-space: nowrap;
+    pointer-events: none;
+    color: var(--accent-cyan);
+    text-shadow: 0 0 8px rgba(0, 255, 249, 0.3);
+}
+
+/* Revelação do texto ao passar o rato */
+.side-nav-item:hover .nav-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Linha Minimalista Fixa na Direita */
+.nav-line {
+    width: 25px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: width 0.3s ease, background-color 0.3s ease;
+    display: inline-block;
+    flex-shrink: 0; /* Garante que a linha nunca encolhe */
+}
+
+.side-nav-item:hover .nav-line {
+    width: 40px;
+    background-color: var(--accent-cyan);
+}
+
+/* Seta para o topo (Inicia oculta) */
+.scroll-top-btn {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    margin-bottom: 5px; /* Ligeiro espaçamento acima das linhas */
+}
+
+/* Mostrar a seta com scroll */
+.scroll-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Desenho da seta alinhado à direita */
+.nav-arrow {
+    width: 12px;
+    height: 12px;
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    border-top: 2px solid rgba(255, 255, 255, 0.4);
+    transform: rotate(45deg);
+    margin-right: 6px; /* Ajuste milimétrico para alinhar perfeitamente com a ponta das linhas */
+    margin-left: 10px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.scroll-top-btn:hover .nav-arrow {
+    border-color: var(--accent-cyan);
+    transform: rotate(45deg) translate(-2px, -2px);
+}
+
+/* Ajustes para Telemóveis */
+@media (max-width: 768px) {
+    .side-navigation {
+        right: 15px;
+        bottom: 20px;
+        gap: 12px;
+    }
+    .side-nav-item .nav-label {
+        display: none; /* Esconde o texto longo em telemóveis para evitar overlap */
+    }
+}
