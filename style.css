@@ -376,3 +376,27 @@ footer { padding: 120px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); text
         display: none; 
     }
 }
+/* --- GRELHA DE REELS DO INSTAGRAM --- */
+.instagram-reels-container {
+    display: flex;
+    flex-wrap: wrap; /* Mantém-se para que no telemóvel passem para baixo automaticamente */
+    justify-content: center;
+    gap: 2rem; /* Reduzido de 3rem para 2rem para ajudar a caberem os 3 na mesma linha */
+    margin-top: 4rem;
+}
+
+.instagram-reels-container iframe {
+    width: 270px; /* Reduz o tamanho (o original HTML pedia 320px) */
+    height: 480px; /* Mantém a proporção 9:16 exata */
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(150, 0, 255, 0.1);
+    transition: border-color 0.4s ease, transform 0.4s ease;
+    background: var(--bg-color); /* Impede o brilho branco enquanto o instagram carrega */
+}
+
+.instagram-reels-container iframe:hover {
+    border-color: var(--brand-purple-light);
+    transform: translateY(-5px); /* Adicionado o efeito de levantar ao passar o rato para consistência com o site */
+}
