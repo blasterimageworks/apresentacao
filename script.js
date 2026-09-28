@@ -235,3 +235,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+/* --- CONTROLOS DO CARROSSEL DE YOUTUBE --- */
+window.addEventListener('load', () => {
+    const ytTrack = document.getElementById('yt-track');
+    const ytPrev = document.getElementById('yt-prev');
+    const ytNext = document.getElementById('yt-next');
+
+    if (ytTrack && ytPrev && ytNext) {
+        ytNext.addEventListener('click', () => {
+            // Avança a largura exata de um vídeo + o espaçamento (gap)
+            const videoWidth = ytTrack.querySelector('.video-item').offsetWidth + 32; 
+            ytTrack.scrollBy({ left: videoWidth, behavior: 'smooth' });
+        });
+        
+        ytPrev.addEventListener('click', () => {
+            const videoWidth = ytTrack.querySelector('.video-item').offsetWidth + 32;
+            ytTrack.scrollBy({ left: -videoWidth, behavior: 'smooth' });
+        });
+    }
+});
