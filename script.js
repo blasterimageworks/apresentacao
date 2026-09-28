@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* --- LÓGICA DO IDIOMA SEM FALHAS --- */
     window.setLanguage = function(lang) {
         const body = document.body;
         const btnPt = document.getElementById('btn-pt');
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setLanguage(bodyClass.includes('lang-pt') ? 'pt' : 'en');
 
 
-    /* --- ANIMAÇÕES DE SCROLL (ENTRADA E SAÍDA ATIVAS) --- */
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* --- BOTÕES MAGNÉTICOS --- */
     if (window.innerWidth > 768) {
         const magnetics = document.querySelectorAll('.magnetic');
         magnetics.forEach(btn => {
@@ -73,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-/* --- LÓGICA DO CARROSSEL NOVO (OPACIDADE DA IMAGEM E FADE) --- */
 window.addEventListener('load', () => {
     const track = document.getElementById('logo-track');
     const prevBtn = document.getElementById('prev-btn');
@@ -199,7 +194,6 @@ window.addEventListener('load', () => {
     startAutoPlay();
 });
 
-/* --- CONTROLO DA SETA VOLTAR AO TOPO & SMOOTH SCROLL --- */
 document.addEventListener('DOMContentLoaded', () => {
     const scrollTopBtn = document.getElementById('back-to-top');
 
@@ -236,22 +230,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* --- CONTROLOS DO CARROSSEL DE YOUTUBE --- */
 window.addEventListener('load', () => {
-    const ytTrack = document.getElementById('yt-track');
-    const ytPrev = document.getElementById('yt-prev');
-    const ytNext = document.getElementById('yt-next');
+    function setupCarousel(trackId, prevBtnId, nextBtnId, itemSelector) {
+        const track = document.getElementById(trackId);
+        const prev = document.getElementById(prevBtnId);
+        const next = document.getElementById(nextBtnId);
 
-    if (ytTrack && ytPrev && ytNext) {
-        ytNext.addEventListener('click', () => {
-            // Avança a largura exata de um vídeo + o espaçamento (gap)
-            const videoWidth = ytTrack.querySelector('.video-item').offsetWidth + 32; 
-            ytTrack.scrollBy({ left: videoWidth, behavior: 'smooth' });
+        if (!track || !prev || !next) return;
+
+        const wrapper = track.closest('.youtube-carousel-wrapper');
+
+        function updateMask() {
+            if (!wrapper) return;
+            
+            if (track.scrollLeft <= 5) {
+                wrapper.classList.remove('scrolled-right');
+            } else {
+                wrapper.classList.add('scrolled-right');
+            }
+
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+                wrapper.classList.add('at-end');
+            } else {
+                wrapper.classList.remove('at-end');
+            }
+        }
+
+        track.addEventListener('scroll', updateMask);
+        setTimeout(updateMask, 100);
+
+        next.addEventListener('click', () => {
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                const item = track.querySelector(itemSelector);
+                if (item) {
+                    const itemWidth = item.offsetWidth + 32; 
+                    track.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                }
+            }
         });
         
-        ytPrev.addEventListener('click', () => {
-            const videoWidth = ytTrack.querySelector('.video-item').offsetWidth + 32;
-            ytTrack.scrollBy({ left: -videoWidth, behavior: 'smooth' });
+        prev.addEventListener('click', () => {
+            if (track.scrollLeft <= 5) {
+                track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+            } else {
+                const item = track.querySelector(itemSelector);
+                if (item) {
+                    const itemWidth = item.offsetWidth + 32;
+                    track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+                }
+            }
         });
     }
+
+    setupCarousel('yt-track', 'yt-prev', 'yt-next', '.video-item');
+    setupCarousel('reels-track', 'reels-prev', 'reels-next', '.reel-item');
 });
