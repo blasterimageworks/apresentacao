@@ -129,23 +129,61 @@ p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem; max-
     margin: 0 auto;
 }
 
-.carousel-btn { 
-    background: transparent; border: none; color: rgba(255, 255, 255, 0.5); 
-    display: flex; align-items: center; justify-content: center; 
-    font-size: 2.8rem; font-weight: 300; padding: 10px; cursor: pointer; 
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-    z-index: 10;
-    user-select: none;
-}
-.carousel-btn:hover { 
-    color: var(--accent-cyan); 
-    text-shadow: 0 0 15px rgba(0, 255, 249, 0.4); 
-    transform: scale(1.1); 
-}
-
 .carousel-track { 
     display: flex; align-items: center; width: 100%;
 }
+
+.nav-svg {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+}
+
+.carousel-btn, .yt-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    user-select: none;
+    
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    opacity: 0.35; 
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-btn:hover, .yt-btn:hover {
+    opacity: 1; 
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.carousel-btn:hover {
+    transform: scale(1.1);
+}
+
+.yt-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.yt-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+.yt-prev { left: -20px; }
+.yt-next { right: -20px; }
 
 .logo-slide {
     flex: 0 0 calc(100% / var(--logos-visiveis));
@@ -271,36 +309,6 @@ p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem; max-
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 .video-info h3 { font-size: 1.5rem; color: var(--text-primary); }
 
-.yt-btn {
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(5, 5, 5, 0.6);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    color: var(--accent-cyan);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.yt-btn:hover {
-    background: var(--brand-purple-dark);
-    color: white;
-    border-color: var(--brand-purple-light);
-    box-shadow: 0 0 15px rgba(150, 0, 255, 0.5);
-}
-
-.yt-prev { left: -20px; }
-.yt-next { right: -20px; }
-
 .reel-item {
     flex: 0 0 270px;
     scroll-snap-align: center;
@@ -324,17 +332,89 @@ p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem; max-
     transform: translateY(-5px);
 }
 
+/* --- ESTILOS PARA O CARROSSEL DE FOTOGRAFIA --- */
+.photo-item {
+    flex: 0 0 60%;
+    scroll-snap-align: center;
+}
+
+.photo-link {
+    text-decoration: none;
+    display: block;
+}
+
+.photo-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(150, 0, 255, 0.1);
+    transition: border-color 0.4s ease, transform 0.4s ease;
+    background-color: var(--bg-color);
+}
+
+.photo-container:hover {
+    border-color: var(--brand-purple-light);
+    transform: translateY(-5px);
+}
+
+.photo-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.photo-container:hover img {
+    transform: scale(1.05);
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.4) 60%, transparent 100%);
+    padding: 40px 30px 25px;
+    z-index: 2;
+    transition: background 0.4s ease;
+}
+
+.photo-overlay h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    transition: color 0.3s ease;
+}
+
+.photo-container:hover .photo-overlay h3 {
+    color: var(--accent-cyan);
+}
+
 /* --- MOBILE SPECIFIC RULES (INCLUINDO O EFEITO PEEKING) --- */
 @media (max-width: 768px) {
     .youtube-track .video-item {
         flex: 0 0 82%; 
-        /* Alinha à esquerda no telemóvel em vez de centrar, criando o efeito peeking */
         scroll-snap-align: start;
     }
     
     .reel-item {
-        /* Alinha os reels à esquerda também */
         scroll-snap-align: start;
+    }
+    
+    .photo-item {
+        flex: 0 0 85%;
+        scroll-snap-align: start;
+    }
+    
+    .photo-overlay h3 {
+        font-size: 1.3rem;
     }
 
     .yt-btn {

@@ -286,4 +286,5 @@ window.addEventListener('load', () => {
 
     setupCarousel('yt-track', 'yt-prev', 'yt-next', '.video-item');
     setupCarousel('reels-track', 'reels-prev', 'reels-next', '.reel-item');
+    setupCarousel('photo-track', 'photo-prev', 'photo-next', '.photo-item');
 });
